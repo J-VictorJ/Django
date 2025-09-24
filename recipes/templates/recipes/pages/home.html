@@ -1,7 +1,13 @@
 {% include 'recipes/partials/head.html' %}
 <body>
     {% include 'recipes/partials/header.html' %}
-    <h2>Home Page {{ name }}</h2>
-    <p>That worked!</p>
+    <div class="search-container">
+        <div class="container">
+            <form action="" class="search-form">
+                <input type="search" class="search-input" placeholder="Search.." name="search">
+                <button type="submit" class="search-button"> <i class="fas fa-search"></i> </button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
