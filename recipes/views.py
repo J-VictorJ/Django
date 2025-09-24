@@ -5,8 +5,7 @@ from django.http import HttpResponse
 #But in recipes.views
 
 def home(request):
-    return HttpResponse("Nothing here but everything is here!")
-
+    return render(request, 'home.html', { 'name': 'я Виктор'})
 
 def sobre(request):
     return HttpResponse("\"Sobre\" a página de receitas")
