@@ -1,10 +1,12 @@
 # from django.http import HttpResponse
 from django.urls import path
-from recipes.views import home
+from . import views
 
-
+app_name = 'recipes'
+ 
 urlpatterns = [
-    path('', home),
-    #path('sobre/', sobre),
+    path('', views.home, name="home"),
+    path('recipes/category/<int:category_id>/', views.category, name="category"),
+    path('recipes/<int:id>/', views.recipe, name="recipe"),
     # The 'sobre' path will return a simple HTTP response when accessed
 ]
