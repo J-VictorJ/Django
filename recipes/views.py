@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 # from django.http import HttpResponse
 from utils.recipes.factory import make_recipe
-from . import views
+# from . import views
 from .models import Recipe
+from django.http.response import Http404
+from django.db.models import Q
 # Importing the HttpResponse function to return a simple HTTP response
 #But in recipes.views
 
@@ -34,6 +36,27 @@ def recipe(request, id):
         'is_detail_page': True,
     })
 
+
+def search(request):
+    search_term = request.GET.get('q', '').strip()
+
+    if not search_term:
+        raise Http404()
+
+    recipes = Recipe.objects.filter(
+        Q(
+            Q(title__icontains=search_term) |
+            Q(description__icontains=search_term),
+        ),
+        is_published=True
+    ).order_by('-id')
+
+    return render(request, 'recipes/pages/search.html', {
+        'pages_title': f'Search for "{search_term}" | ',
+        'search_term': search_term,
+        'recipes': recipes,
+    })
+    
 #def sobre(request):
 #    return HttpResponse("\"Sobre\" a página de receitas")
     # return render(request, 'recipes/sobre.html')
