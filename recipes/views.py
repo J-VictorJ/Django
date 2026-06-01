@@ -11,7 +11,7 @@ import os
 # Importing the HttpResponse function to return a simple HTTP response
 #But in recipes.views
 
-PER_PAGES = int(os.environ.get('PER_PAGES'))
+PER_PAGES = int(os.environ.get('PER_PAGES', 6))
 
 def home(request):
     recipes = Recipe.objects.filter(
