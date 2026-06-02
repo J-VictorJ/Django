@@ -1,36 +1,45 @@
-<div class="main-content center container">
-    <form class="main-form" action="{{form_action}}" method="POST">
-        {% csrf_token %}
-        <div class="form-content form-content-grid">
-            {% for field in form %}
-                <div class="form-group">
-                    <label for="{{field.id_for_label}}">{{field.label}}</label>
-                    {{field}}
+<div class="main-content container">
+  <form class="main-form"
+   action="{{ form_action }}"
+    method="POST"
+    enctype="multipart/form-data"
+    >
+    {% csrf_token %}
 
-                    {% if field.help_text %}
-                        <p class="help-text">{{field.help_text}}</p>
-                    {% endif %}
-                    {{field.errors}}
-                </div>
-            {% endfor %}
+    <div class="form-content form-content-grid">
+      {% for field in form %}
+        <div class="form-group {{ field.field.widget.attrs.class }}">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{field}}
+
+          {% if field.help_text %}
+            <p class="help-text">{{ field.help_text }}</p>
+          {% endif %}
+
+          {{ field.errors }}
         </div>
 
-        {% if form.errors %}
-        <div class="form-content form-content-grid">
-            <div class="form-group">
-                <div class="message message-error">
-                    there are mistakes up here
-                </div>
-            </div>
-        </div>
+        {% if field.name == 'cover' and field.value.url %}
+          <div class="span-2">
+            <img src="{{ field.value.url }}" alt="Capa para {{ recipe.title }}">
+          </div>
         {% endif %}
+      {% endfor %}
+    </div>
 
-
-        <div class="form-content form-content-grid">
-            <div class="form-group">
-            <button type="submit">Send</button>
-            </div>
+    {% if form.errors %}
+    <div class="form-content form-content-grid">
+      <div class="form-group">
+        <div class="message message-error">
+          There are errors in the form, please fix them and send again.
         </div>
-        
-    </form>
-</div>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="form-content form-content-grid">
+      <div class="form-group">
+        <button type="submit">Send</button>
+      </div>
+    </div>
+  </form>
