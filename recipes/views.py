@@ -11,6 +11,9 @@ import os
 # Importing the HttpResponse function to return a simple HTTP response
 #But in recipes.views
 from django.views.generic import ListView, DetailView
+from django.http import JsonResponse
+from django.forms.models import model_to_dict
+
 
 PER_PAGES = int(os.environ.get('PER_PAGES', 6))
 
@@ -38,6 +41,24 @@ class RecipeListViewBase(ListView):
             {'recipes': page_obj, 'pagination_range': pagination_range}
         )
         return ctx
+    
+    
+    
+class RecipeListViewHome(RecipeListViewBase):
+    template_name = 'recipes/pages/home.html'  
+    
+    
+class RecipeListViewHomeApi(RecipeListViewBase):
+    template_name = 'recipes/pages/home.html'
+    
+    def render_to_response(self, context, **response_kwargs):
+        recipes = self.get_context_data()['recipes']
+        recipes_list = recipes.object_list.values()
+        
+        return JsonResponse(
+            list(recipes_list),
+            safe=False
+        )
     
 class RecipeListViewCategory(RecipeListViewBase):
     template_name = 'recipes/pages/category.html'
@@ -125,6 +146,29 @@ class RecipeDetail(DetailView):
         })
     
         return ctx
+    
+    
+    
+class RecipeDetailAPI(RecipeDetail):
+    def render_to_response(self, context, **response_kwargs):
+        recipe = self.get_context_data()['recipe']
+        recipe_dict = model_to_dict(recipe)
+        
+        recipe_dict['created_at'] = str(recipe.created_at)
+        recipe_dict['updated_at'] = str(recipe.created_at)
+        
+        if recipe_dict.get('cover'):
+            recipe_dict['cover'] = self.request.build_absolute_uri()[1:] + recipe_dict['cover'].url[1:]
+        else:
+            recipe_dict['cover']
+        
+        del recipe_dict['preparation_steps_is_html']
+        
+        return JsonResponse(
+            recipe_dict,
+            safe=False
+        )
+    
     
     
 #def sobre(request):

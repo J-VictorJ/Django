@@ -15,7 +15,8 @@ import os
 from django.contrib.messages import constants
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+from dotenv import load_dotenv
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -76,11 +77,22 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
+"""
+DATABASES = {
+    'default': {
+    'ENGINE': os.environ.get('DATABASE_ENGINE'),
+    'NAME': os.environ.get('DATABASE_NAME'),
+    'USER': os.environ.get('DATABASE_USER'),
+    'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+    'HOST': os.environ.get('DATABASE_HOST'),
+    'PORT': os.environ.get('DATABASE_PORT'),
+}
 }
 
 
