@@ -8,8 +8,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from recipes.models import Recipe
 # from authors.forms.recipe_form import AuthorRecipeForm
-
-
 # Create your views here.
 def register_view(request):
     register_form_data = request.session.get('register_form_data', None)
@@ -18,7 +16,6 @@ def register_view(request):
         'form': form,
         'form_action': reverse('authors:register_create'),
     })
-    
 
 def register_create(request):
     if not request.POST:
@@ -70,6 +67,50 @@ def login_create(request):
     return redirect(reverse('authors:dashboard'))
 
 
+"""from django.db import connection
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
+
+# (todos os imports originais continuam no topo do arquivo)
+@csrf_exempt
+def login_create(request):
+    if not request.POST:
+        raise Http404()
+
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
+
+    # ⚠️ VULNERÁVEL (proposital)
+    # Query montada por concatenação — sem parametrização
+    sql = (
+        "SELECT id, username, password, email "
+        "FROM auth_user "
+        f"WHERE username = '{username}' AND password = '{password}'"
+    )
+
+    resultado = None
+    erro_sql = None
+
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(sql)
+            resultado = cursor.fetchall()
+    except Exception as exc:
+        erro_sql = str(exc)
+
+    if resultado:
+        user = User.objects.get(pk=resultado[0][0])
+        login(request, user)
+        messages.success(request, f'Logado como {resultado[0][1]}')
+
+    return render(request, 'authors/pages/login.html', {
+        'form': LoginForm(),
+        'form_action': reverse('authors:login_create'),
+        'query': sql,
+        'resultado': resultado,
+        'erro_sql': erro_sql,
+    })
+"""
 @login_required(login_url='authors:login', redirect_field_name='next')
 def logout_view(request):
     if not request.POST:

@@ -6,6 +6,7 @@
     <title>{% block title %}{% endblock title %} Recipes</title>
 </head>
 <body>
+    {% include 'global/partials/menu.html' %}
     {% include 'global/partials/header.html' %}
     {% include 'global/partials/search.html' %}  
     <main class="main-content-container">
@@ -16,6 +17,6 @@
 
     {% include "global/partials/footer.html" %}
 
-    <script src="{% static 'global/js/script.js' %}"></script>
+    <script src="{% static 'global/js/scripts.js' %}"></script>
 </body>
 </html>

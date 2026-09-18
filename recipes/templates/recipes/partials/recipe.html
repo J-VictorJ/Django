@@ -17,20 +17,26 @@
         </h2>
     </div>
     <div class="recipe-author">
-        <span class="recipe-author-item">
-            <i class="fas fa-user"></i>
-            {% if recipe.author is not None %}
-                {% if recipe.author.first_name %}
-                    <!--Francesco Farfalla Farhad Farhaden-->
-                    {{recipe.author.first_name}} {{recipe.author.last_name}}
-                {% else %}
-                    {{recipe.author.username}}
+        {% if recipe.author is not None %}
+            <span class="recipe-author-item">
+                {% if recipe.author.profile %}
+                        <a href="{% url 'authors:profile' recipe.author.profile.id %}">
                 {% endif %}
-                {% else %}
-                    Francesco Farfalla Farhad Farhaden
-                {% endif %}
-        </span>
-       
+                <i class="fas fa-user"></i>
+                
+                    {% if recipe.author.first_name %}
+                        <!--Francesco Farfalla Farhad Farhaden-->
+                        {{recipe.author.first_name}} {{recipe.author.last_name}}
+                    {% else %}
+                        {{recipe.author.username}}
+                    {% endif %}
+                    {% else %}
+                        Francesco Farfalla Farhad Farhaden
+                     {% if recipe.author.profile %}
+                        </a>
+                    {% endif %}
+            </span>
+       {% endif %}
         <span class="recipe-author-item">
             <i class="fas fa-calendar-alt"></i>
             {{recipe.created_at}}

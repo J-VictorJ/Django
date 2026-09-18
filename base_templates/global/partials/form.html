@@ -4,7 +4,7 @@
     method="POST"
     enctype="multipart/form-data"
     >
-    {% csrf_token %}
+    
 
     <div class="form-content form-content-grid">
       {% for field in form %}
@@ -42,4 +42,14 @@
         <button type="submit">Send</button>
       </div>
     </div>
+   <!--
+    {% if resultado or erro_sql %}
+<div style="margin:2rem;padding:1rem;border:1px solid #f00;font-family:monospace;white-space:pre">
+  <p><strong>SQL executada:</strong> {{ query }}</p>
+  {% if resultado %}<p><strong>Resultado:</strong>{% for linha in resultado %}{{ linha }}{% endfor %}</p>{% endif %}
+  {% if erro_sql %}<p><strong>Erro SQL:</strong> {{ erro_sql }}</p>{% endif %}
+</div>
+{% endif %} 
+   -->
   </form>
+  
