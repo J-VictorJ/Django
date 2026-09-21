@@ -148,7 +148,7 @@ O objetivo foi avaliar, de forma comparativa e controlada, o quanto as proteçõ
 
 **Conclusão do trabalho:** nos três casos, a exploração só foi possível mediante alteração deliberada do código, fora das práticas documentadas pelo próprio framework; ao restaurar a configuração padrão, nenhum ataque funcionou. Ou seja, o Django reduz bastante o esforço para desenvolver aplicações seguras, mas não substitui a disciplina de engenharia de quem desenvolve.
 
-O TCC (formato artigo, 17 páginas) já foi apresentado e corrigido. 📎 [Leia o artigo completo em PDF](./docs/tcc-cybersec.pdf).
+O TCC (formato artigo, 17 páginas) já foi apresentado e corrigido. 📎 [Leia o artigo completo em PDF](./tcc-cybersec.pdf).
 
 ---
 
